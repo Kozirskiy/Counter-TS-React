@@ -15,7 +15,7 @@ function App() {
             setCounter(newValue)
         }
     }, []);
-    
+
     useEffect(() => {
         localStorage.setItem('counterValue', JSON.stringify(counter))
     }, [counter])
@@ -23,8 +23,15 @@ function App() {
 
     //increment
     const incrementCounterHandler = () => {
+
         const newCount: number = counter + 1
         setCounter(newCount)
+        // if(newCount <= 5) {
+        //     setCounter(newCount)
+        // } else  {
+        //     console.warn('Максимум досягнуто')
+        // }
+
     }
 
     // delete counter
@@ -57,61 +64,35 @@ function App() {
 
                 <ButtonFieldStyled>
                     <Button onClick={incrementCounterHandler}
-                            title={'inc'} style={{
-                        color: '#292C35',
-                        backgroundColor: '#63DBFD',
-                        fontSize: '35px',
-                        marginRight: '20px',
-                        padding: '5px',
-                        width: '150px',
-                        cursor: 'pointer'
-                    }}/>
+                            title={'inc'}
+                            disabledButton={counter >= 5}
+                            className={counter >= 5 ? 'disabled-style' : ''}
+                            style={{
+                                color: '#292C35',
+                                backgroundColor: '#63DBFD',
+                                fontSize: '35px',
+                                marginRight: '20px',
+                                padding: '5px',
+                                width: '150px',
+                                cursor: counter >= 5 ? 'not-allowed' : 'pointer',
+                                opacity: counter >= 5 ? 0.5 : 1
+                            }}/>
                     <Button
                         onClick={deleteIncrementCounterHandler}
-                        title={'reset'} style={{
-                        color: '#292C35',
-                        backgroundColor: '#63DBFD',
-                        fontSize: '35px',
-                        marginRight: '20px',
-                        padding: '5px',
-                        width: '150px',
-                        cursor: 'pointer'
-                    }}/>
-
-                    {/*<Button disabledButton={false} onClick={setLocalStorageHandler}*/}
-                    {/*        title={'set'} style={{*/}
-                    {/*    color: '#292C35',*/}
-                    {/*    backgroundColor: '#63DBFD',*/}
-                    {/*    fontSize: '35px',*/}
-                    {/*    marginRight: '20px',*/}
-                    {/*    padding: '5px',*/}
-                    {/*    width: '150px',*/}
-                    {/*    cursor: 'pointer'*/}
-                    {/*}}/>*/}
-
-                    {/*<Button disabledButton={false} onClick={getLocalStorageHandler}*/}
-                    {/*        title={'get'} style={{*/}
-                    {/*    color: '#292C35',*/}
-                    {/*    backgroundColor: '#63DBFD',*/}
-                    {/*    fontSize: '35px',*/}
-                    {/*    marginRight: '20px',*/}
-                    {/*    padding: '5px',*/}
-                    {/*    width: '150px',*/}
-                    {/*    cursor: 'pointer'*/}
-                    {/*}}/>*/}
-
-                    {/*<Button disabledButton={false} onClick={clearLocalStorageHandler}*/}
-                    {/*        title={'clear'} style={{*/}
-                    {/*    color: '#292C35',*/}
-                    {/*    backgroundColor: '#63DBFD',*/}
-                    {/*    fontSize: '35px',*/}
-                    {/*    marginRight: '20px',*/}
-                    {/*    padding: '5px',*/}
-                    {/*    width: '150px',*/}
-                    {/*    cursor: 'pointer'*/}
-                    {/*}}/>*/}
-
-
+                        title={'reset'}
+                        disabledButton={counter == 0}
+                        className={counter == 0 ? 'disabled-style' : ''}
+                        style={{
+                            color: '#292C35',
+                            backgroundColor: '#63DBFD',
+                            fontSize: '35px',
+                            marginRight: '20px',
+                            padding: '5px',
+                            width: '150px',
+                            // cursor: 'pointer',
+                            cursor: counter == 0 ? 'not-allowed' : 'pointer',
+                            opacity: counter == 0 ? 0.5 : 1
+                        }}/>
                 </ButtonFieldStyled>
             </MainBoxStyled>
         </MainStyled>

@@ -2,7 +2,7 @@ export type ButtonPropsType = {
     title?: string
     onClick?: () => void
     className?: string
-    disabledButton?: boolean
+    disabledButton?: boolean | undefined
     style?: React.CSSProperties | undefined
 }
 
