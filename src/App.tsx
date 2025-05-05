@@ -1,21 +1,54 @@
 import './App.css'
 import styled from "styled-components";
 import {Button} from "./components/Button.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 function App() {
 
-
     const [counter, setCounter] = useState<number>(0)
 
-    const incrementHandler = () => {
+    useEffect(() => {
+        const valueAsString = localStorage.getItem('counterValue')
+        console.log(localStorage.getItem('counterValue'))
+        if (valueAsString) {
+            const newValue = JSON.parse(valueAsString)
+            setCounter(newValue)
+        }
+    }, []);
+    
+    useEffect(() => {
+        localStorage.setItem('counterValue', JSON.stringify(counter))
+    }, [counter])
+
+
+    //increment
+    const incrementCounterHandler = () => {
         const newCount: number = counter + 1
         setCounter(newCount)
     }
 
-    const deleteIncrement = () => {
+    // delete counter
+    const deleteIncrementCounterHandler = () => {
         setCounter(0)
     }
+    //set localStorage
+    // const setLocalStorageHandler = () => {
+    //     localStorage.setItem('counterValue', JSON.stringify(counter))
+    // }
+
+    //get localStorage
+    // const getLocalStorageHandler =() => {
+    //     const valueAsString = localStorage.getItem('counterValue')
+    //     if(valueAsString ) {
+    //         const newValue = JSON.parse(valueAsString)
+    //         setCounter(newValue)
+    //     }
+    // }
+
+    //clear localStorage
+    // const clearLocalStorageHandler =() => {
+    //     localStorage.clear()
+    //     setCounter(0)}
 
     return (
         <MainStyled>
@@ -23,7 +56,8 @@ function App() {
                 <NumberFieldStyled counter={counter}>{counter}</NumberFieldStyled>
 
                 <ButtonFieldStyled>
-                    <Button onClick={incrementHandler} title={'inc'} style={{
+                    <Button onClick={incrementCounterHandler}
+                            title={'inc'} style={{
                         color: '#292C35',
                         backgroundColor: '#63DBFD',
                         fontSize: '35px',
@@ -32,9 +66,8 @@ function App() {
                         width: '150px',
                         cursor: 'pointer'
                     }}/>
-
                     <Button
-                        onClick={deleteIncrement}
+                        onClick={deleteIncrementCounterHandler}
                         title={'reset'} style={{
                         color: '#292C35',
                         backgroundColor: '#63DBFD',
@@ -44,6 +77,41 @@ function App() {
                         width: '150px',
                         cursor: 'pointer'
                     }}/>
+
+                    {/*<Button disabledButton={false} onClick={setLocalStorageHandler}*/}
+                    {/*        title={'set'} style={{*/}
+                    {/*    color: '#292C35',*/}
+                    {/*    backgroundColor: '#63DBFD',*/}
+                    {/*    fontSize: '35px',*/}
+                    {/*    marginRight: '20px',*/}
+                    {/*    padding: '5px',*/}
+                    {/*    width: '150px',*/}
+                    {/*    cursor: 'pointer'*/}
+                    {/*}}/>*/}
+
+                    {/*<Button disabledButton={false} onClick={getLocalStorageHandler}*/}
+                    {/*        title={'get'} style={{*/}
+                    {/*    color: '#292C35',*/}
+                    {/*    backgroundColor: '#63DBFD',*/}
+                    {/*    fontSize: '35px',*/}
+                    {/*    marginRight: '20px',*/}
+                    {/*    padding: '5px',*/}
+                    {/*    width: '150px',*/}
+                    {/*    cursor: 'pointer'*/}
+                    {/*}}/>*/}
+
+                    {/*<Button disabledButton={false} onClick={clearLocalStorageHandler}*/}
+                    {/*        title={'clear'} style={{*/}
+                    {/*    color: '#292C35',*/}
+                    {/*    backgroundColor: '#63DBFD',*/}
+                    {/*    fontSize: '35px',*/}
+                    {/*    marginRight: '20px',*/}
+                    {/*    padding: '5px',*/}
+                    {/*    width: '150px',*/}
+                    {/*    cursor: 'pointer'*/}
+                    {/*}}/>*/}
+
+
                 </ButtonFieldStyled>
             </MainBoxStyled>
         </MainStyled>
@@ -66,8 +134,7 @@ type TypeProps = {
 }
 
 const NumberFieldStyled = styled.div<TypeProps>`
-    color: ${(props)=> props.counter >= 5 ? 'red' : '#292C35'};
-    //color: #292C35;
+    color: ${(props) => props.counter >= 5 ? 'red' : '#292C35'};
     background-color: #63DBFD;
     width: 350px;
     height: 150px;

@@ -7,6 +7,8 @@ export type ButtonPropsType = {
 }
 
 export const Button = ({title, onClick, className, style, disabledButton}: ButtonPropsType) => {
+
+
     return (
         <button className={className} onClick={onClick} style={style} disabled={disabledButton}>
             {title}
