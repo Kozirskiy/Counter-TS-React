@@ -10,15 +10,15 @@ function App() {
 
     const [valueNumberMax, setValueNumberMax] = useState<number>(0)
     const [valueNumberStart, setValueNumberStart] = useState<number>(0)
+
     const [error, setError] = useState<string | null>()
 
     const [errorStart, setErrorStart] = useState<boolean>(false);
     const [errorMax, setErrorMax] = useState<boolean>(false);
 
 
-
-    useEffect(()=> {
-        const isStartInvalid = valueNumberStart < 0 ||valueNumberStart >= valueNumberMax;
+    useEffect(() => {
+        const isStartInvalid = valueNumberStart < 0 || valueNumberStart >= valueNumberMax;
         const isMaxInvalid = valueNumberMax < 0 || valueNumberMax <= valueNumberStart;
 
         setErrorStart(isStartInvalid);
@@ -80,7 +80,7 @@ function App() {
     return (
         <MainStyled>
             <MainBoxStyled>
-                <NumberFieldStyled counter={counter}>
+                <NumberFieldStyled maxValue={valueNumberMax} counter={counter}>
                     <ValueBoxField>
                         <DataBox>
                             <TextField>max value:</TextField>
@@ -89,7 +89,7 @@ function App() {
                                    style={{
                                        width: '100px',
                                        height: '40px',
-                                       backgroundColor: 'white',
+                                       backgroundColor:errorStart ? 'salmon' :  'white',
                                        border: errorMax ? '2px solid red' : 'none',
                                        borderRadius: '5px',
                                        color: 'black',
@@ -104,16 +104,16 @@ function App() {
                             <Input value={valueNumberStart}
                                    onChange={(e) => setValueNumberStart(Number(e.currentTarget.value))}
                                    style={{
-                                width: '100px',
-                                height: '40px',
-                                backgroundColor: 'white',
-                                border: errorStart ? '2px solid red' : 'none',
-                                borderRadius: '5px',
-                                color: 'black',
-                                fontSize: '20px',
-                                fontWeight: 'bold',
-                                textAlign: 'center'
-                            }}/>
+                                       width: '100px',
+                                       height: '40px',
+                                       backgroundColor: errorStart ? 'salmon' : 'white',
+                                       border: errorStart ? '2px solid red' : 'none',
+                                       borderRadius: '5px',
+                                       color: 'black',
+                                       fontSize: '20px',
+                                       fontWeight: 'bold',
+                                       textAlign: 'center'
+                                   }}/>
                         </DataBox>
 
                     </ValueBoxField>
@@ -137,7 +137,8 @@ function App() {
                 </ButtonFieldStyled>
             </MainBoxStyled>
             <MainBoxStyled>
-                <NumberFieldStyled counter={counter}>{error ? <ErrorText>{error}</ErrorText> : counter}</NumberFieldStyled>
+                <NumberFieldStyled counter={counter} maxValue={valueNumberMax}>{error ?
+                    <ErrorText>{error}</ErrorText> : counter}</NumberFieldStyled>
 
                 <ButtonFieldStyled>
                     <Button onClick={incrementCounterHandler}
@@ -174,13 +175,13 @@ function App() {
         </MainStyled>
     )
 }
+
 const ErrorText = styled.p`
     color: red;
     font-size: 20px;
     margin: auto;
     text-align: center;
 `
-
 
 
 const MainStyled = styled.main`
